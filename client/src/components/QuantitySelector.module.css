@@ -1,0 +1,5 @@
+.wrap { display: inline-flex; align-items: center; border: 1px solid var(--sand); border-radius: 2px; }
+.wrap button { width: 44px; height: 44px; background: none; border: 0; font-size: 18px; transition: background .2s; }
+.wrap button:hover:not(:disabled) { background: var(--beige); }
+.wrap button:disabled { opacity: .35; cursor: not-allowed; }
+.wrap output { min-width: 36px; text-align: center; font-size: 14px; }

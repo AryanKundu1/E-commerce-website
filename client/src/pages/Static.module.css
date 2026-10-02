@@ -1,0 +1,20 @@
+.page { padding-top: 64px; max-width: 880px; }
+.page h1 { margin-bottom: 32px; }
+.lead { font-family: var(--serif); font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.35; color: var(--brown); max-width: 30em; }
+.page h2 { margin-top: 56px; font-size: 2rem; }
+.page p { color: var(--brown); max-width: 62ch; }
+.values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 40px; margin-top: 16px; }
+.values div { border-top: 1px solid var(--line); padding: 16px 0; }
+.values h3 { margin-bottom: 4px; }
+.values p { margin: 0; font-size: 14px; }
+.note { font-size: 13px; color: var(--gray); margin-top: 48px; }
+.articles { display: flex; flex-direction: column; gap: 64px; margin-top: 16px; }
+.article { display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-items: start; }
+.article img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--beige); }
+.tag { font-size: 12.5px; color: var(--gray); }
+.article h2 { margin: 6px 0 12px; font-size: 1.9rem; }
+.toggle { background: none; border: 0; text-decoration: underline; padding: 0; min-height: 44px; }
+.center { text-align: center; padding: 120px 16px; display: flex; flex-direction: column; align-items: center; }
+.center h1 { margin-bottom: 8px; }
+.center p { color: var(--gray); margin-bottom: 28px; }
+@media (max-width: 720px) { .values, .article { grid-template-columns: 1fr; } .page { padding-top: 40px; } }

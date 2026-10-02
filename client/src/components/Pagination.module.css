@@ -1,0 +1,6 @@
+.nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 56px; flex-wrap: wrap; }
+.nav ul { display: flex; gap: 4px; }
+.nav button { background: none; border: 0; min-width: 40px; min-height: 40px; padding: 0 10px; font-size: 14px; color: var(--gray); border-bottom: 1px solid transparent; }
+.nav button:hover:not(:disabled) { color: var(--charcoal); }
+.nav button:disabled { opacity: .35; cursor: not-allowed; }
+.nav .active { color: var(--charcoal); border-bottom-color: var(--charcoal); }

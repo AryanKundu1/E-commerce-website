@@ -1,0 +1,3 @@
+.box { text-align: center; padding: 72px 16px; max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.box p { color: var(--gray); max-width: 42ch; }
+.error h3 { color: var(--danger); }

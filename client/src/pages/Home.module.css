@@ -1,0 +1,46 @@
+.hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - var(--nav-h)); max-height: 820px; }
+.heroText { background: var(--beige); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 48px clamp(24px, 6vw, 96px); }
+.heroText h1 { max-width: 11ch; }
+.heroText p { color: var(--brown); font-size: 1.05rem; margin-bottom: 32px; max-width: 34ch; }
+.heroImage { overflow: hidden; background: var(--sand); }
+.heroImage img { width: 100%; height: 100%; object-fit: cover; }
+.section { margin-top: 104px; }
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 32px; }
+.head h2 { margin: 0; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; }
+.cats { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); margin-top: 24px; }
+.cats li { border-right: 1px solid var(--line); }
+.cats li:last-child { border-right: 0; }
+.cats a { display: flex; flex-direction: column; gap: 6px; padding: 28px 20px 28px 0; text-decoration: none; height: 100%; transition: background .3s, padding .3s; }
+.cats a:hover { background: var(--paper); padding-left: 16px; }
+.catName { font-family: var(--serif); font-size: 1.8rem; }
+.catNote { color: var(--gray); font-size: 13.5px; }
+.philosophy { background: var(--olive); color: var(--paper); margin-top: 104px; padding: 96px 0; }
+.philInner { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: start; }
+.philInner h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); }
+.philInner p { color: #e8e3cf; }
+.philInner a { color: var(--ivory); }
+.journal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.article { text-decoration: none; display: flex; flex-direction: column; gap: 8px; }
+.article img { aspect-ratio: 4 / 3; width: 100%; object-fit: cover; background: var(--beige); }
+.article span { font-size: 12.5px; color: var(--gray); margin-top: 6px; }
+.article h3 { margin: 0; }
+.article:hover h3 { text-decoration: underline; }
+.news { margin-top: 104px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.news p { color: var(--gray); }
+
+@media (max-width: 1000px) {
+  .grid4 { grid-template-columns: repeat(2, 1fr); }
+  .cats { grid-template-columns: repeat(2, 1fr); }
+  .cats li { border-bottom: 1px solid var(--line); }
+  .journal { grid-template-columns: 1fr; }
+  .philInner { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; max-height: none; min-height: 0; }
+  .heroImage { height: 52vh; order: -1; }
+  .heroText { padding: 40px 20px 48px; }
+  .section, .philosophy, .news { margin-top: 72px; }
+  .philosophy { padding: 64px 0; }
+  .grid4 { gap: 28px 12px; }
+}
