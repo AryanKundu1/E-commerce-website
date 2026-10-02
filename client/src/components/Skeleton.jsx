@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styles from './Skeleton.module.css';
 
 export function SkeletonBlock({ height = 16, width = '100%', style }) {
@@ -17,11 +18,26 @@ export function ProductCardSkeleton() {
 }
 
 export function ProductGridSkeleton({ count = 6 }) {
+  const [slow, setSlow] = useState(false);
+
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setSlow(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className={styles.grid} role="status" aria-label="Loading products">
-      {Array.from({ length: count }).map((_, i) => (
-        <ProductCardSkeleton key={i} />
-      ))}
-    </div>
+    <>
+      {slow && (
+        <p role="status" style={{ color: 'var(--gray)', fontSize: 14, marginBottom: 20 }}>
+          Waking up the server. This can take up to a minute on the free hosting plan.
+        </p>
+      )}
+      <div className={styles.grid} role="status" aria-label="Loading products">
+        {Array.from({ length: count }).map((_, i) => (
+          <ProductCardSkeleton key={i} />
+        ))}
+      </div>
+    </>
   );
 }
