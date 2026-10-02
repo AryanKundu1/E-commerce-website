@@ -1,6 +1,6 @@
 # ÉLAN      ARYAN KUNDU 25BCE11217
 
-ÉLAN is an online store for skincare, body care, hair care, fragrance and home products. I built it as my college assignment using the MERN stack (MongoDB, Express, React, Node). The brand, product names and text are all made up. 
+ÉLAN is an online store for skincare, body care, hair care, fragrance and home products. I built it as my assignment for iOS CLUB using the MERN stack (MongoDB, Express, React, Node). The brand, product names and text are all made up. 
 
 **Live site:** https://e-commerce-website-jki2.onrender.com
 **API:** https://e-commerce-website-u5sh.onrender.com/api/health
