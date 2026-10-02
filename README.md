@@ -63,52 +63,6 @@ elan/
     └── server.js
 ```
 
-## Running it locally
-
-You need Node.js 18 or newer, and MongoDB running locally or a free Atlas cluster.
-
-1. Install everything from the project root:
-   ```bash
-   npm run install-all
-   ```
-2. Copy the two example env files and rename them:
-   - `server/.env.example` to `server/.env`
-   - `client/.env.example` to `client/.env`
-
-   `server/.env`
-   ```
-   PORT=5000
-   MONGO_URI=mongodb://127.0.0.1:27017/elan
-   CLIENT_URL=http://localhost:5173
-   ```
-   `client/.env`
-   ```
-   VITE_API_URL=http://localhost:5000/api
-   ```
-3. Load the sample products (this clears existing products and orders first):
-   ```bash
-   npm run seed
-   ```
-4. Start the backend and frontend together:
-   ```bash
-   npm run dev
-   ```
-5. Open http://localhost:5173
-
-## API
-
-Every response is either `{ "success": true, "data": ... }` or `{ "success": false, "message": "..." }`.
-
-| Method | Route | What it does |
-|---|---|---|
-| GET | `/api/health` | Shows the API and database status |
-| GET | `/api/products` | Lists products. Supports `search`, `category`, `type`, `minPrice`, `maxPrice`, `inStock`, `featured`, `sort`, `page`, `limit` |
-| GET | `/api/products/filters` | Returns the available categories and types |
-| GET | `/api/products/:idOrSlug` | Returns one product and related products |
-| POST | `/api/orders` | Creates an order from product ids, quantities, address and payment method |
-| GET | `/api/orders/:id` | Returns an order |
-
-Sort options are `featured`, `price-low`, `price-high`, `name-asc`, `name-desc` and `rating`. Category and type accept comma-separated values, for example `/api/products?category=Skin,Body&sort=price-low`.
 
 ## How a few things work
 
