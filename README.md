@@ -1,116 +1,149 @@
-# ÉLAN
+# ÉLAN      ARYAN KUNDU 25BCE11217
 
-A minimalist e-commerce site (skincare, body, hair, fragrance, home) built with the MERN stack for a college assignment. The look is inspired by premium editorial brands; the brand, copy and products are original and fictional.
+ÉLAN is an online store for skincare, body care, hair care, fragrance and home products. I built it as my college assignment using the MERN stack (MongoDB, Express, React, Node). The brand, product names and text are all made up. 
 
-## Features (mapped to the assignment)
+**Live site:** https://e-commerce-website-jki2.onrender.com
+**API:** https://e-commerce-website-u5sh.onrender.com/api/health
 
-| Requirement | Where it is |
+The API runs on a free hosting plan that goes to sleep when idle, so the first load can take up to a minute.
+
+
+
+## What you can do on the site
+
+- Browse 20 products and open any of them for details, ingredients and related items
+- Search as you type, filter by category, product type, price and availability, and sort six different ways
+- Move between pages of results (9 products per page)
+- Add items to a bag, change quantities, remove items, and see subtotal, shipping and total
+- Check out with a delivery form and either Cash on Delivery or a demo card payment (no real payment is taken)
+- See an order confirmation page for every order placed
+- Read the About and Journal pages
+
+I left out login, an admin panel, reviews and a wishlist on purpose. The assignment didn't ask for them, and I wanted the core features done properly. Orders are placed as a guest.
+
+## How it meets the assignment requirements
+
+| Requirement | How I did it |
 |---|---|
-| Robust JS and async state handling | `hooks/useAsync.js` (loading / error / data, request cancellation), `CartContext.jsx` |
-| Form validation | Checkout (`utils/validators.js` + server-side re-validation), newsletter, price filter |
-| Graceful error handling | Axios interceptor (`services/api.js`) turns API downtime and timeouts into friendly messages; `ErrorState` with a Try again button; empty states for search, bag, 404 |
-| Client-side storage | `localStorage`: bag (`elan_cart`), newsletter; `sessionStorage`: checkout form draft |
-| Skeleton loaders / spinners | `Skeleton.jsx` on shop, home, product page; spinner on Place order |
-| Toast notifications | `react-hot-toast` for bag actions, order success, errors |
-| Mobile responsive | CSS Modules, hamburger menu, filter drawer, 2-column grids, tested down to 320px layouts |
-| Backend + DB | Express REST API, MongoDB via Mongoose |
-
-Also included: live debounced search, multi-category and product-type filters, price range, in-stock filter, 6 sort options, pagination, and URL query parameters (shareable, e.g. `/shop?category=Skin,Body&minPrice=1000&sort=price-low`).
-
-Deliberately left out to keep the project simple: login/accounts, admin panel, reviews, wishlist. Orders are guest orders.
+| JavaScript logic and async state | A custom `useAsync` hook handles loading, error and data states and cancels outdated requests. The bag lives in `CartContext`. |
+| Form validation | Checkout fields (email, 10-digit phone, 6-digit postal code, lengths), card fields, newsletter and price range are all validated. The server checks the order again. |
+| Graceful error handling | If the API is down or slow, users see a clear message and a "Try again" button instead of a blank page. There are also empty states for no search results and an empty bag, and a 404 page. |
+| Client-side storage | `localStorage` keeps the bag between visits. `sessionStorage` keeps a half-filled checkout form if the page is refreshed. |
+| Loading feedback | Skeleton cards while products load, and a spinner on the Place order button. |
+| Toast notifications | Shown when items are added or removed, when an order is placed, and when something fails. |
+| Responsive design | CSS Modules throughout, a hamburger menu and a filter drawer on mobile, and layouts checked down to small phone widths. |
+| Backend and database | Express REST API with MongoDB through Mongoose. |
 
 ## Tech stack
-React 18 + Vite, React Router, Context API, Axios, react-hot-toast, CSS Modules · Node.js, Express, MongoDB, Mongoose.
+
+- **Frontend:** React 18, CSS Modules
+- **Backend:** Node.js, Express, Mongoose
+- **Database:** MongoDB (local, or Atlas in the cloud)
 
 ## Folder structure
+
 ```
 elan/
-├── package.json            (root scripts)
-├── client/                 React app
-│   └── src/ components/ pages/ context/ services/ hooks/ utils/
-└── server/                 Express API
-    ├── config/db.js  models/  controllers/  routes/  middleware/  seed/seed.js  server.js
+├── package.json          root scripts
+├── client/               React app
+│   └── src/
+│       ├── components/   Navbar, Footer, ProductCard, FilterPanel, Skeleton...
+│       ├── pages/        Home, Shop, ProductDetails, Cart, Checkout, OrderDetails, About, Journal, NotFound
+│       ├── context/      CartContext
+│       ├── services/     api.js, productService.js, orderService.js
+│       ├── hooks/        useAsync, useDebounce
+│       └── utils/        pricing, validators, journal content
+└── server/               Express API
+    ├── config/           database connection
+    ├── models/           Product, Order
+    ├── controllers/      product and order logic
+    ├── routes/
+    ├── middleware/       error handling
+    ├── seed/             sample data script
+    └── server.js
 ```
 
-## Setup
+## Running it locally
 
-**Prerequisites:** Node.js 18+, and MongoDB (local install, or a free MongoDB Atlas cluster).
+You need Node.js 18 or newer, and MongoDB running locally or a free Atlas cluster.
 
-1. Install everything (from the `elan` folder):
+1. Install everything from the project root:
    ```bash
    npm run install-all
    ```
-2. Create the env files by copying the examples:
-   - `server/.env.example` → **`server/.env`**
-   - `client/.env.example` → **`client/.env`**
+2. Copy the two example env files and rename them:
+   - `server/.env.example` to `server/.env`
+   - `client/.env.example` to `client/.env`
 
-   `server/.env`:
+   `server/.env`
    ```
    PORT=5000
    MONGO_URI=mongodb://127.0.0.1:27017/elan
    CLIENT_URL=http://localhost:5173
    ```
-   (For Atlas, paste your connection string into `MONGO_URI`.)
-
-   `client/.env`:
+   `client/.env`
    ```
    VITE_API_URL=http://localhost:5000/api
    ```
-3. Load the 20 sample products:
+3. Load the sample products (this clears existing products and orders first):
    ```bash
    npm run seed
    ```
-4. Start both apps:
+4. Start the backend and frontend together:
    ```bash
    npm run dev
    ```
-   Open http://localhost:5173 (API health check: http://localhost:5000/api/health).
+5. Open http://localhost:5173
 
 ## API
 
-All responses: `{ "success": true, "data": ... }` or `{ "success": false, "message": "..." }`.
+Every response is either `{ "success": true, "data": ... }` or `{ "success": false, "message": "..." }`.
 
-| Method | Route | Description |
+| Method | Route | What it does |
 |---|---|---|
-| GET | `/api/health` | API + DB status |
-| GET | `/api/products` | Query: `search, category (comma list), type (comma list), minPrice, maxPrice, inStock, featured, sort, page, limit`. Returns `products, currentPage, totalPages, totalProducts` |
-| GET | `/api/products/filters` | Available categories and types |
-| GET | `/api/products/:idOrSlug` | Product + related products |
-| POST | `/api/orders` | Body: `{ items:[{productId, quantity}], shippingAddress, paymentMethod: "COD" or "DEMO_CARD" }` |
-| GET | `/api/orders/:id` | Order details |
+| GET | `/api/health` | Shows the API and database status |
+| GET | `/api/products` | Lists products. Supports `search`, `category`, `type`, `minPrice`, `maxPrice`, `inStock`, `featured`, `sort`, `page`, `limit` |
+| GET | `/api/products/filters` | Returns the available categories and types |
+| GET | `/api/products/:idOrSlug` | Returns one product and related products |
+| POST | `/api/orders` | Creates an order from product ids, quantities, address and payment method |
+| GET | `/api/orders/:id` | Returns an order |
 
-`sort` values: `featured, price-low, price-high, name-asc, name-desc, rating`.
+Sort options are `featured`, `price-low`, `price-high`, `name-asc`, `name-desc` and `rating`. Category and type accept comma-separated values, for example `/api/products?category=Skin,Body&sort=price-low`.
+
+## How a few things work
+
+**Filtering and search.** The shop page keeps every filter in the URL, so a filtered view can be bookmarked or shared. When the URL changes, the page asks the API for matching products and the server builds the MongoDB query. Search waits 350 ms after the last keystroke before sending a request, so it doesn't fire on every letter.
+
+**The bag.** Bag items are stored in React context and saved to `localStorage` whenever they change, so they survive a refresh. Quantity can never go above the stock count.
+
+**Orders.** The browser sends only product ids and quantities. The server looks up the real prices, checks stock, works out the subtotal, shipping and total, reduces the stock, and then saves the order. This way nobody can change a price from the browser. Shipping is free above ₹2,000 and ₹99 otherwise.
+
+## Deployment
+
+The app is deployed on Render with the database on MongoDB Atlas.
+
+- **Database:** Atlas free cluster, with a database user and `0.0.0.0/0` allowed under Network Access. The seed script was run once against it.
+- **Backend:** Render Web Service with root directory `server`, build command `npm install` and start command `npm start`. Environment variables are `MONGO_URI` and `CLIENT_URL` (the exact frontend address).
+- **Frontend:** Render Static Site with root directory `client`, build command `npm install && npm run build` and publish directory `dist`. The environment variable `VITE_API_URL` is the backend address ending in `/api`. A rewrite rule from `/*` to `/index.html` makes page refreshes work.
 
 ## Testing checklist
-- [ ] Shop loads with skeletons, then 9 products per page; pagination works
-- [ ] Typing in search filters live after a short pause; URL updates
-- [ ] Multiple categories / types, price range (try min > max), in-stock only, each sort option
-- [ ] Search `zzzz` shows the empty state; "Clear search and filters" resets
-- [ ] Stop the server, refresh: error state appears; start it and press Try again
-- [ ] Add to bag from card and product page; quantity cannot exceed stock (try *Evening Hands Set*, stock 3)
-- [ ] *Stone Mist Room Spray* is out of stock and cannot be added
-- [ ] Refresh the page: bag is still there (localStorage)
-- [ ] Checkout: submit empty form shows errors; bad email/phone/postal code are rejected
-- [ ] Place a COD order and a demo-card order: redirect to order page, bag cleared, stock reduced
-- [ ] Resize to 320px, 375px, 768px, 1024px: no horizontal scroll; hamburger menu and filter drawer work
-- [ ] Unknown URL shows the 404 page
 
-## Common errors
-- **`MongoDB connection failed`**: MongoDB is not running, or `MONGO_URI` is wrong. For Atlas, whitelist your IP.
-- **Shop shows "Unable to reach the server"**: start the backend; check `VITE_API_URL` and restart Vite after editing `.env`.
-- **CORS error**: `CLIENT_URL` in `server/.env` must match the address in your browser exactly.
-- **Empty shop**: run `npm run seed`.
-- **Product images are blank/grey**: the demo images come from picsum.photos and need internet; a placeholder is shown if they fail.
+- [ ] Shop loads with skeletons, then products, and pagination works
+- [ ] Search filters as you type and the URL updates
+- [ ] Category, type, price, in-stock filters and all sort options work together
+- [ ] Searching for nonsense shows the empty state and the clear button resets it
+- [ ] With the server stopped, the shop shows an error with a Try again button
+- [ ] Items can be added from cards and the product page, and quantity stops at stock
+- [ ] Out-of-stock products cannot be added
+- [ ] The bag is still there after a refresh
+- [ ] Empty or invalid checkout fields show clear error messages
+- [ ] Cash on Delivery and demo card orders both work, the bag clears and stock goes down
+- [ ] The layout works on phone, tablet and desktop widths with no sideways scrolling
+- [ ] An unknown URL shows the 404 page
 
-## Viva notes
-- **Why React?** Component reuse and state-driven UI. **Why Context API?** The bag is needed by the navbar, product cards, cart and checkout; Context avoids prop drilling without extra libraries.
-- **Why Express/Node/MongoDB/Mongoose?** One language across the stack; Express is a thin REST layer; MongoDB's documents suit products and orders; Mongoose adds schemas and validation.
-- **How filtering works:** the URL holds the filters. When it changes, React calls `GET /api/products` with those params, and the controller builds a MongoDB query (regex search, `$in` for categories, `$gte/$lte` for price), sorts, and paginates with `skip/limit`.
-- **Live search:** `useDebounce` waits 350 ms after typing stops, so one request is sent instead of one per keystroke. Old in-flight requests are cancelled with `AbortController`.
-- **How the bag works:** state in `CartContext`, saved to `localStorage` on every change and read back on load. Quantity is capped at stock.
-- **How orders are safe:** the client sends only product ids and quantities. The server loads real prices, checks stock, computes subtotal/shipping/total (free shipping at ₹2000+, else ₹99), decrements stock atomically, then saves the order.
-- **Error handling:** the Axios interceptor and Express error middleware both produce clear messages; the UI shows them with `ErrorState` or a toast.
-- **Why localStorage / sessionStorage?** localStorage keeps the bag across visits; sessionStorage keeps the half-filled checkout form only for the current tab.
 
-## Future improvements
-User accounts, order history, wishlist, reviews, admin dashboard, real payment gateway.
+
+## Possible improvements
+
+User accounts with order history, an admin dashboard for managing products and orders, product reviews, a wishlist, and a real payment gateway.
+
