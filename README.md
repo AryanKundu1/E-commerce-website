@@ -62,6 +62,37 @@ elan/
     ├── seed/             sample data script
     └── server.js
 ```
+## Running it locally
+
+You need Node.js 18 or newer, and MongoDB running locally or a free Atlas cluster.
+
+1. Install everything from the project root:
+   ```bash
+   npm run install-all
+   ```
+2. Copy the two example env files and rename them:
+   - `server/.env.example` to `server/.env`
+   - `client/.env.example` to `client/.env`
+
+   `server/.env`
+   ```
+   PORT=5000
+   MONGO_URI=mongodb://127.0.0.1:27017/elan
+   CLIENT_URL=http://localhost:5173
+   ```
+   `client/.env`
+   ```
+   VITE_API_URL=http://localhost:5000/api
+   ```
+3. Load the sample products (this clears existing products and orders first):
+   ```bash
+   npm run seed
+   ```
+4. Start the backend and frontend together:
+   ```bash
+   npm run dev
+   ```
+5. Open http://localhost:5173
 
 
 ## How a few things work
